@@ -1,5 +1,6 @@
 # SharpCOM
-# Hausec Fork
+### Hausec Fork, originally by [rvrsh3ll](https://github.com/rvrsh3ll)
+
 
 SharpCOM is a c# port of [Invoke-DCOM](https://github.com/rvrsh3ll/Misc-Powershell-Scripts/blob/master/Invoke-DCOM.ps1)
 
