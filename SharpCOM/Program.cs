@@ -10,9 +10,7 @@ namespace SharpCOM
         {
             string Method = null;
             string ComputerName = null;
-            string Directory = "C:\\WINDOWS\\System32\\";
-            string Parameters = "/c";
-            string BaseCommand = "cmd.exe";
+            string Parameters = null;
             string Command = null;
             bool showhelp = false;
             OptionSet opts = new OptionSet()
@@ -51,7 +49,7 @@ namespace SharpCOM
                     object Item = RemoteComObject.GetType().InvokeMember("Item", BindingFlags.InvokeMethod, null, RemoteComObject, new object[] { });
                     object Document = Item.GetType().InvokeMember("Document", BindingFlags.GetProperty, null, Item, null);
                     object Application = Document.GetType().InvokeMember("Application", BindingFlags.GetProperty, null, Document, null);
-                    Application.GetType().InvokeMember("ShellExecute", BindingFlags.InvokeMethod, null, Application, new object[] { BaseCommand, Parameters + " " + Command, Directory, null, 0 });
+                    Application.GetType().InvokeMember("ShellExecute", BindingFlags.InvokeMethod, null, Application, new object[] { Command, Parameters, 0 });
                 }
                 else if (Method == "MMC")
                 {
@@ -68,14 +66,14 @@ namespace SharpCOM
                     object RemoteComObject = Activator.CreateInstance(ComType);
                     object Document = RemoteComObject.GetType().InvokeMember("Document", BindingFlags.GetProperty, null, RemoteComObject, null);
                     object Application = Document.GetType().InvokeMember("Application", BindingFlags.GetProperty, null, Document, null);
-                    Application.GetType().InvokeMember("ShellExecute", BindingFlags.InvokeMethod, null, Application, new object[] { BaseCommand, Parameters + " " + Command, Directory, null, 0 });
+                    Application.GetType().InvokeMember("ShellExecute", BindingFlags.InvokeMethod, null, Application, new object[] { Command, Parameters, 0 });
                 }
                 else if (Method == "ExcelDDE")
                 {
                     Type ComType = Type.GetTypeFromProgID("Excel.Application", ComputerName);
                     object RemoteComObject = Activator.CreateInstance(ComType);
                     RemoteComObject.GetType().InvokeMember("DisplayAlerts", BindingFlags.SetProperty, null, RemoteComObject, new object[] { false });
-                    RemoteComObject.GetType().InvokeMember("DDEInitiate", BindingFlags.InvokeMethod, null, RemoteComObject, new object[] { Command, Parameters });
+                    RemoteComObject.GetType().InvokeMember("DDEInitiate", BindingFlags.InvokeMethod, null, RemoteComObject, new object[] { Command });
                 }
                 else
                 {
